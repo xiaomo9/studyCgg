@@ -2,7 +2,8 @@
 using namespace std;
 
 /*
-
+运用递归的方法，首先找到一个基准，设置两个指针，将左侧比base大的放右边，将右侧比base小的放走边，
+移动首尾指针，最后首指针值为base,之后递归base左右两侧的数列。
 */
 
 void quitsort(int arr[], int start, int end)
