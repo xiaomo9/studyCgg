@@ -17,6 +17,7 @@ int main()
             sm.Exit_system();
             break;
         case 1: //开始比赛
+            sm.Start_speech();
             break;
         case 2: //查询记录
             break;
