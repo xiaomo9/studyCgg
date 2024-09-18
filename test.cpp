@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    int a= '13' - '10';
+    int a = 'b' - 'a';
     cout << a <<endl;
     system("pause");
 }
