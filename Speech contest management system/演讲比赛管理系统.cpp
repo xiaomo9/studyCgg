@@ -22,8 +22,10 @@ int main()
             sm.Start_speech();
             break;
         case 2: //²éÑ¯¼ÇÂ¼
+            sm.road_recore();
             break;
         case 3: // É¾³ý¼ÇÂ¼
+            sm.clear_record();
             break;
         
         default:

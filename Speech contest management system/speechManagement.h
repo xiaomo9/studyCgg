@@ -31,6 +31,11 @@ public:
     void Show_Scorce();
     // 保存结果
     void Save_recore();
+    // 加载往届记录
+    void road_recore();
+    // 清空记录
+    void clear_record();
+
 
 public: // 成员属性与方法
     void init_SpeechManager();
@@ -44,7 +49,11 @@ public: // 成员属性与方法
     vector<int> v_victort_speakrt;
     // 编号与成员对应容器
     map<int, Speaker> id_speaker;
+    // 往届冠亚军记录
+    map<int, vector<string>> m_record;
     // 比赛轮数
     int epoch;
+    // 往届数据是否为空
+    bool FileIsEmpty;
 };
 

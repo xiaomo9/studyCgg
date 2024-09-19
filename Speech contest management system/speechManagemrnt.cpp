@@ -36,6 +36,7 @@ void SpeechManager::init_SpeechManager()
 {
     this->v1_speaker.clear();
     this->v2_speaker.clear();
+    this->v_victort_speakrt.clear();
     this->id_speaker.clear();
     this->epoch = 1;
 }
@@ -192,10 +193,70 @@ void SpeechManager::Save_recore()
     ofs.open("speech.csv",ios::out | ios::app);
     for(vector<int>::iterator it = this->v_victort_speakrt.begin(); it != this->v_victort_speakrt.end(); it++)
     {
-        ofs << *it << ',' << this->id_speaker[*it].m_scorce[1];
+        ofs << this->id_speaker[*it].m_name << ',' << this->id_speaker[*it].m_scorce[1] << ',';
     }
+    this->v2_speaker.clear();
+    this->v_victort_speakrt.clear();
     ofs << endl;
     ofs.close();
+}
+
+// 加载往届数据
+void SpeechManager::road_recore()
+{
+    ifstream ifs("speech.csv",ios::in); // 读取文件
+    if(!ifs.is_open()) // 判断文件是否存在
+    {
+        this->FileIsEmpty = true;
+        cout << "文件不存在！" << endl;
+        system("pause");
+        return;
+    }
+
+    char ch;
+    ifs >> ch; 
+    if(ifs.eof()) // 判断文件是否为空
+    {
+        cout << "文件为空！" << endl;
+        ifs.close();
+        system("pause");
+        return;
+    }
+
+    this->FileIsEmpty = false;
+
+    ifs.putback(ch); //前面读走的字符要读回来
+    string data;
+
+    int session = 1;
+    while(ifs >> data)
+    {   
+        vector<string> s_record;
+        int pos = -1; // ‘，’ 所在位置
+        int start = 0;
+        while(true)
+        {
+            pos = data.find(',',start);
+            if(pos == -1) break;
+            string temp = data.substr(start,pos-start);
+            s_record.push_back(temp);
+            start = pos + 1;
+        }
+        this->m_record.insert(make_pair(session,s_record));
+        session ++;
+    }
+    // 输出往届信息
+    cout << "===========往届冠亚军记录如下：==================" << endl;
+    for(map<int,vector<string>>::iterator it = this->m_record.begin(); it != this->m_record.end(); it++)
+    {
+        cout << "第 " << (*it).first << "  届成绩：" << endl;
+        cout << "冠军:" << (*it).second[0] << "  成绩：" << (*it).second[1] << endl;
+        cout << "亚军:" << (*it).second[2] << "  成绩：" << (*it).second[3] << endl;
+        cout << "季军:" << (*it).second[4] << "  成绩：" << (*it).second[5] << endl;
+    }
+    ifs.close();
+    this->m_record.clear();
+    system("pause");
 }
 
 // 开始比赛
@@ -224,4 +285,37 @@ void SpeechManager::Start_speech()
     system("cls");
     cout << "=======本届比赛圆满完成！=========" << endl;
     system("pause");
+}
+
+void SpeechManager::clear_record()
+{
+    cout << "是否要清空所有记录：" << endl
+    << "1、是" << endl << "0、否" << endl;
+
+    int change ;
+    cin >> change;
+    if(change == 1)
+    {
+        cout << "请输入密码：" << endl;
+        int id;
+        cin >> id;
+        if(id == 1825518914)
+        {
+            //清空数据
+            ofstream ofs;
+            ofs.open("speech.csv",ios::trunc); // trunc删除原文件新建一个文件
+            ofs.close();
+            cout << "清空数据完毕！" << endl;
+            system("pause");
+        }
+        else{
+            cout << "密码错误，你没有权限！" << endl;
+            system("pause");
+        }
+    }
+    else  
+    {
+        system("pause");
+        return;
+    }
 }
