@@ -27,6 +27,10 @@ public:
     void speech_draw();
     // 比赛程序
     void Speech_contest();
+    // 显示结果
+    void Show_Scorce();
+    // 保存结果
+    void Save_recore();
 
 public: // 成员属性与方法
     void init_SpeechManager();
