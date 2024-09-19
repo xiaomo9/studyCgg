@@ -25,6 +25,8 @@ public:
     void Start_speech();
     // 抽签函数
     void speech_draw();
+    // 比赛程序
+    void Speech_contest();
 
 public: // 成员属性与方法
     void init_SpeechManager();
@@ -34,6 +36,8 @@ public: // 成员属性与方法
     vector<int> v1_speaker;
     // 第二轮成员编号容器
     vector<int> v2_speaker;
+    // 冠亚军成员编号容器
+    vector<int> v_victort_speakrt;
     // 编号与成员对应容器
     map<int, Speaker> id_speaker;
     // 比赛轮数

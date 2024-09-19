@@ -27,8 +27,6 @@ int main()
         default:
             break;
         }
-        
-        system("pause");
         system("cls");
     }
     }

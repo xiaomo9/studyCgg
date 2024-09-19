@@ -1,6 +1,8 @@
 #include"speechManagement.h"
 #include<algorithm>
-
+#include<deque>
+#include<map>
+#include<numeric>
 
 SpeechManager::SpeechManager()
 {
@@ -88,6 +90,73 @@ void SpeechManager::speech_draw()
     system("pause");
 }
 
+// 比赛函数
+void SpeechManager::Speech_contest()
+{
+    cout << "开始第《《 " << this->epoch << " 》》 轮比赛" << endl;
+    vector<int> game_speker; // 比赛成员
+    map<double,int,greater<double>> map_speaker;  //用成绩排名的容器(降序)
+    int num_speaker = 0;
+
+    if(this->epoch == 1) // 获取第一轮比赛人员
+    {
+        game_speker = this->v1_speaker;
+    }
+    else if(this->epoch == 2) // 获取第二轮比赛人员
+    {
+        game_speker = this->v2_speaker;
+    }
+
+    // 开始为比赛成员打分
+    for(vector<int>::iterator iter = game_speker.begin(); iter != game_speker.end(); iter++)
+    {
+        num_speaker ++;
+        deque<double> d;
+        //  获取每个人的分数
+        for(int i = 0; i<10; i++)
+        {
+            double num = (rand() % 401 + 600) / 10.f;
+            d.push_back(num);
+        }
+        sort(d.begin(),d.end(),greater<double>()); //排序
+        d.pop_front(); // 去除最高分
+        d.pop_back(); // 去除最低分
+
+        double sum = accumulate(d.begin(),d.end(),0.0f);
+        double ave = sum / (double)d.size();
+        // 将成绩赋值给此人
+        this->id_speaker[*iter].m_scorce[this->epoch-1] = ave;
+
+        // 每六个人为一组
+        map_speaker.insert(make_pair(ave,*iter));
+        if(num_speaker % 6 == 0)
+        {
+            cout << "第《《 " << num_speaker / 6 << " 》》小组比赛成绩：" << endl;
+            for(map<double,int>::iterator it = map_speaker.begin(); it != map_speaker.end(); ++it)
+            {
+                cout << "编号：" << (*it).second <<"  姓名：" << this->id_speaker[(*it).second].m_name
+                << "  成绩：" << (*it).first << endl; 
+            }
+
+            //取前三名
+            int count = 0 ;
+            for(map<double,int>::iterator it = map_speaker.begin(); it != map_speaker.end() && count <3; it++,count++)
+            {
+                if(this->epoch == 1) //第一轮的前三名
+                {
+                    this->v2_speaker.push_back((*it).second);
+                }
+                if(this->epoch == 2) //第二轮的前三名
+                {
+                    this->v_victort_speakrt.push_back((*it).second);
+                }
+            }
+            map_speaker.clear(); //清空临时容器  
+            system("pause");
+        }
+    }
+}
+
 
 // 开始比赛
 void SpeechManager::Start_speech()
@@ -96,12 +165,13 @@ void SpeechManager::Start_speech()
     // 开始抽签
     this->speech_draw();
     // 比赛（评分）
+    this->Speech_contest();
     // 展示结果
 
 
     // 第二轮
     // 开始抽签
-    this->speech_draw();
+    // this->speech_draw();
     // 比赛（评分）
     // 展示结果
     // 保存成绩到文件中
