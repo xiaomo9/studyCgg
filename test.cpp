@@ -6,17 +6,17 @@ using namespace std;
 
 class Solution {
 public:
-    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-        vector<int> v;
-        for(int i = 0; i<nums1.size(); i++)
+    int search(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size();
+        while(left+1 != right)
         {
-            if(find(nums2.begin(),nums2.end(),nums1[i])!=nums2.end())
-            {
-                
-                
-            }
+            int mid = (right - left)/2 + left;
+            if(nums[mid] <= target) left = mid;
+            if(nums[mid] > target) right = mid;
         }
-        return v;
+        if(nums[left]==target) return left;
+        else return -1;
     }
 };
 
