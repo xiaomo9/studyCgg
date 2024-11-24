@@ -10,46 +10,21 @@ using namespace std;
 请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
 */
 
-struct ListNode
+
+//斐波那契
+int fact(int n)
 {
-    int val;
-    ListNode *next;
-    ListNode(int val){
-        this->val = val;
-        this->next = NULL;
+    vector<int> visited(n,-1);
+    if(n<=2) return 1;
+    if(visited[n] == -1)
+    {
+        visited[n] = fact(n-1) + fact(n-2);
     }
-};
-
-class Solution {
-public:
-    ListNode* reverseList(ListNode* head) {
-        ListNode *pre = NULL;
-        ListNode *cur = head;
-        while (cur != NULL)
-        {
-            ListNode *nex = cur->next;
-            cur->next = pre;
-            pre = cur;
-            cur = nex;
-        }
-        return pre;
-    }
-};
-
+    return visited[n];
+}
 
 int main()
 {
-    ListNode *head = new ListNode(1);
-    ListNode *node1 = new ListNode(2);
-    ListNode *node2 = new ListNode(3);
-    ListNode *node3 = new ListNode(4);
-    ListNode *node4 = new ListNode(5);
-    head->next = node1;
-    node1->next = node2;
-    node2->next = node3;
-    node3->next = node4;
-    Solution s;
-    s.reverseList(head);
     system("pause");
     return 0;
 }   
