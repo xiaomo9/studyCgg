@@ -4,48 +4,52 @@ using namespace std;
 #include<vector>
 #include<algorithm>
 #include<map>
+#include<cmath>
+/*
+给你一个链表的头节点 head 和一个整数 val ，
+请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
+*/
 
-class Solution {
-    constexpr static int dx[4] = {0,1,0,-1};
-    constexpr static int dy[4] = {-1,0,1,0};
-public:
-    int islandPerimeter(vector<vector<int>>& grid) {
-        int sum = 0;
-        int n = grid.size(), m = grid[0].size();
-        for(int i = 0; i<n; ++i){
-            for(int j =0; j<m; ++j){
-                if(grid[i][j]){
-                    int ans = 0;
-                    for(int k = 0; k < 4; ++k){
-                        int tx = j + dx[k];
-                        int ty = i + dy[k];
-                        if(tx<0 || tx>m ||ty<0|| ty>i || grid[ty][tx]==0)
-                        {
-                            ans +=1;
-                        }
-                    }
-                    sum += ans;
-                }
-            }
-        }
-        return sum;
+struct ListNode
+{
+    int val;
+    ListNode *next;
+    ListNode(int val){
+        this->val = val;
+        this->next = NULL;
     }
 };
 
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode *pre = NULL;
+        ListNode *cur = head;
+        while (cur != NULL)
+        {
+            ListNode *nex = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = nex;
+        }
+        return pre;
+    }
+};
+
+
 int main()
 {
-    // int a = 9;
-    // char b = (char) ('0' + a);
-    Solution S;
-    vector<int> v1;
-    vector<int> v2;
-    v1.push_back(2);
-    v1.push_back(4);
-    v2.push_back(2);
-    v2.push_back(1);
-    v2.push_back(3);
-    int a = S.findContentChildren(v1,v2);
-    cout << a << endl;
+    ListNode *head = new ListNode(1);
+    ListNode *node1 = new ListNode(2);
+    ListNode *node2 = new ListNode(3);
+    ListNode *node3 = new ListNode(4);
+    ListNode *node4 = new ListNode(5);
+    head->next = node1;
+    node1->next = node2;
+    node2->next = node3;
+    node3->next = node4;
+    Solution s;
+    s.reverseList(head);
     system("pause");
-}
-
+    return 0;
+}   
