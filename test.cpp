@@ -11,20 +11,21 @@ using namespace std;
 */
 
 
-//ì³²¨ÄÇÆõ
-int fact(int n)
-{
-    vector<int> visited(n,-1);
-    if(n<=2) return 1;
-    if(visited[n] == -1)
-    {
-        visited[n] = fact(n-1) + fact(n-2);
-    }
-    return visited[n];
-}
 
-int main()
-{
-    system("pause");
-    return 0;
-}   
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> result;
+        for(int i = 0; i<nums1.size(); ++i){
+            auto it = find(nums2.begin(),nums2.end(),nums1[i]);
+            for(;it!=nums2.end();it++){
+                if(nums1[i]<*it){
+                    result.push_back(*it);
+                    break;
+                }
+            }
+            if(it==nums2.end()) result.push_back(-1);
+        }
+        return result;
+    }
+};
