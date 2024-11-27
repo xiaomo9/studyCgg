@@ -10,22 +10,22 @@ using namespace std;
 请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
 */
 
-
-
 class Solution {
 public:
-    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
-        vector<int> result;
-        for(int i = 0; i<nums1.size(); ++i){
-            auto it = find(nums2.begin(),nums2.end(),nums1[i]);
-            for(;it!=nums2.end();it++){
-                if(nums1[i]<*it){
-                    result.push_back(*it);
-                    break;
-                }
+    int numberOfAlternatingGroups(vector<int>& colors) {
+        int cnt = 1;
+        int sum = 0;
+        int len = colors.size();
+        for(int i = 1; i<len+2; ++i){
+            if(colors[i%len]==colors[(i-1)%len]){
+                cnt = 1;
+                continue;
             }
-            if(it==nums2.end()) result.push_back(-1);
+            cnt++;
+            if(cnt>=3){
+                sum++;
+            }
         }
-        return result;
+        return sum;
     }
 };
