@@ -54,4 +54,6 @@ int main(){
     vector<int> v2 = {1,0,-1,0,-2,2};
     Solution s;
     vector<vector<int>> a = s.fourSum(v2,0);
+    system("pause");
+    return 0; 
 }
