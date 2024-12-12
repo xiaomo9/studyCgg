@@ -35,7 +35,6 @@ public:
             sum -= canadidates[i]; //»ØËİ
             v1.pop_back();
         }
-
     }
 };
 
