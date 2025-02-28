@@ -5,37 +5,39 @@ using namespace std;
 #include<algorithm>
 #include<unordered_map>
 #include<cmath>
+#include<iomanip>
 
-/*
-¸øÄãÒ»¸öÁ´±íµÄÍ·½Úµã head ºÍÒ»¸öÕûÊı val £¬
-ÇëÄãÉ¾³ıÁ´±íÖĞËùÓĞÂú×ã Node.val == val µÄ½Úµã£¬²¢·µ»Ø ĞÂµÄÍ·½Úµã ¡£
-*/
 
-class Solution {
+class Student
+{
+private:
+    string name;
+    int stu_id;
+    static int stu_num; // é™æ€ç±»å†…æˆå‘˜å˜é‡ ï¼ˆå±äºç±»æœ¬èº«ï¼Œç›´æ¥ç”¨ç±»è°ƒç”¨ï¼‰
+    const int class_id; // ç±»å†…å¸¸é‡æ•°æ®ï¼Œåˆå§‹åŒ–åªèƒ½åœ¨æ„é€ å‡½æ•°åˆ—è¡¨ä¸Šè¿›è¡Œåˆå§‹åŒ–
 public:
-    vector<string> findRelativeRanks(vector<int>& score) {
-        vector<int> temp = score;
-        vector<string> result;
-        sort(temp.begin(),temp.end(),greater<int>());
-        unordered_map<int,int> map1;
-        for(int i = 0; i<score.size(); ++i){
-            map1[temp[i]] = i+1;
-        }
-        for(int k : score){
-            if(map1[k]==1) result.push_back("Gold Medal");
-            else if(map1[k]==2) result.push_back("Silver Medal");
-            else if(map1[k]==3) result.push_back("Bronze Medal");
-            else result.push_back(to_string(map1[k]));
-        }
-        return result;
+    Student(string name1,int id):class_id(10),name(name1){
+        this -> stu_id = id;
+        
     }
+    void print(){
+        cout << "å§“åï¼š" << name << "\nå­¦å·ï¼š" << stu_id << "\nç­çº§ï¼š" << class_id
+        << "\nå­¦ç”Ÿäººæ•°ï¼š" << stu_num << endl;
+    }
+    friend void output(Student s);
 };
 
+void output(Student s){
+    cout << "å§“åï¼š" << s.name << "\nå­¦å·ï¼š" << s.stu_id << "\nç­çº§ï¼š" << s.class_id
+        << "\nå­¦ç”Ÿäººæ•°ï¼š" << s.stu_num << endl;
+}
 
-int main()
-{
-    vector<string> s1 = {"Hello","Alaska","Dad","Peace"};
-    Solution s;
+int Student :: stu_num = 40; // 
+int main(){
+    string s = "accca";
+    int a,b,c,d;
+    d = (a=4,b=16,c=32);
+    cout << "s\\t" << endl;
+    cout << endl ;
     system("pause");
-    return 0;
 }
