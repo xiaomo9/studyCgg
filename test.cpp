@@ -24,7 +24,10 @@ public:
         cout << "姓名：" << name << "\n学号：" << stu_id << "\n班级：" << class_id
         << "\n学生人数：" << stu_num << endl;
     }
-    friend void output(Student s);
+    void say(){
+        cout << "叫安保部！" << endl;
+    }
+    friend void output(Student s);//友元函数，可以访问类的private属性
 };
 
 void output(Student s){
