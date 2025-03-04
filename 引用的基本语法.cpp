@@ -1,6 +1,13 @@
 #include<iostream>
 using namespace std;
 
+struct ListNode
+{
+    int val;
+    ListNode* node;
+    ListNode(int num) : val(num),node(nullptr){}
+};
+
 int main()
 {
     //给一个变量取别名
@@ -14,6 +21,4 @@ int main()
 
     system("pause");
     return 0;
-
-
 }

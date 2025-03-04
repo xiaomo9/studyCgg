@@ -27,7 +27,7 @@ public:
     void say(){
         cout << "叫安保部！" << endl;
     }
-    friend void output(Student s);//友元函数，可以访问类的private属性
+    friend void output(Student s);//友元函数（要提前在类内声名），可以访问类的private属性
 };
 
 void output(Student s){
