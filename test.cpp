@@ -16,9 +16,8 @@ private:
     static int stu_num; // 静态类内成员变量 （属于类本身，直接用类调用）
     const int class_id; // 类内常量数据，初始化只能在构造函数列表上进行初始化
 public:
-    Student(string name1,int id):class_id(10),name(name1){
+    Student(string name1,int id):class_id(id),name(name1){
         this -> stu_id = id;
-        
     }
     void print(){
         cout << "姓名：" << name << "\n学号：" << stu_id << "\n班级：" << class_id
