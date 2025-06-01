@@ -21,55 +21,69 @@ struct Node
     Node(int key,int val):key(key),val(val),prev(nullptr),next(nullptr){}
 };
 
-
 class LRUCache {
 public:
-    Node *head,*tail;
-    int capacity,size;
-    unordered_map<int,Node*> h;//哈希表存储节点与key的信息
-    LRUCache(int _capacity): capacity(_capacity),size(0){
-        head = new Node();
-        tail = new Node();
+    LRUCache(int capacity): _capacity(capacity), size(0) {
+        this->head = new Node();
+        this->tail = new Node();
         head->next = tail;
         tail->prev = head;
     }
     
     int get(int key) {
-        if(h.count(key)){
-            removenode(h[key]);//将此被访问的数据移到缓存区最前
-            addnodetohead(h[key]);
-            return h[key]->val;
+        if(cache.count(key)){
+            movetohead(cache[key]);
+            return cache[key]->val;
         }
-        else return -1;
+        return -1;
     }
     
     void put(int key, int value) {
-        if(h.count(key)){
-            removenode(h[key]);
-            addnodetohead(h[key]);
-            h[key]->val = value;
+        if(cache.count(key)){
+            movetohead(cache[key]);
+            cache[key]->val = value;
         }
         else{
-            if(capacity == size){
-                Node *remo = tail->prev;
-                h.erase(remo->key); //从哈希表中删除最后一个
-                removenode(remo); //从链表中删除最后一个
-                size --;
-            }
-            Node *new_node = new Node(key,value);
-            addnodetohead(new_node);
-            h[key] = new_node;
+            Node* newnode = new Node(key,value);
+            addhead(newnode);
+            cache[key] = newnode;
             size ++;
+            if(size > _capacity){
+                Node* node = deletail();
+                cache.erase(node->key);
+                size --;
+                delete node;
+            }
         }
     }
-    void addnodetohead(Node *node){
-        node->next = head->next;
-        node->prev = head;
-        head->next->prev = node;
-        head->next = node;
+
+    void rmnode(Node* node1){
+        node1->prev->next = node1->next;
+        node1->next->prev = node1->prev;
     }
-    void removenode(Node *node){
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
+
+    void addhead(Node* node1){
+        node1->prev = head;
+        node1->next = head->next;
+        head->next->prev = node1;
+        head->next = node1;
+
     }
+
+    void movetohead(Node *node){
+        rmnode(node);
+        addhead(node);
+    }
+
+    Node* deletail(){
+        Node *node = tail->prev;
+        rmnode(node);
+        return node;
+    }
+
+private:
+    int _capacity, size;
+    Node *head;
+    Node *tail;
+    unordered_map<int, Node*> cache;
 };
